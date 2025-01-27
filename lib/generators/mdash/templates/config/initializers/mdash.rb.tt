@@ -1,0 +1,6 @@
+# Use this setup block to configure all options available in Mdash
+Mdash.configure do |config|
+  config.secret = "<%= SecureRandom.hex(32) %>"
+
+  config.exported_metrics = {}
+end

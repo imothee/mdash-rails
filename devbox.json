@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.7/.schema/devbox.schema.json",
+  "packages": {
+    "ruby":        "3.3.5",
+    "libyaml": {
+      "version": "latest",
+      "outputs": ["out", "dev"]
+    },
+    "zlib":                   "latest"
+  },
+  "shell": {
+    "init_hook": ["echo 'Welcome to devbox!' > /dev/null"]
+  }
+}
