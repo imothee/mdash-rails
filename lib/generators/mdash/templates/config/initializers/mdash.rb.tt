@@ -1,6 +1,10 @@
 # Use this setup block to configure all options available in Mdash
 Mdash.configure do |config|
+  config.site_name = "<%= Rails.application.class.module_parent.name %>"
   config.secret = "<%= SecureRandom.hex(32) %>"
+
+  # How long should we cache metrics for so we don't hit the database too often?
+  # config.cache_expiry = 5.minutes
 
   config.exported_metrics = {}
 end

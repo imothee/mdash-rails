@@ -18,14 +18,17 @@ module Mdash
     def stats
       # Check the last time stats were updated
       # If it's been more than 5 minutes, update the stats
-      if @last_updated.nil? || @last_updated < 5.minutes.ago
-        @stats = config.metrics.reduce({}) do |stats, metric|
+      if @last_updated.nil? || @last_updated < config.cache_expiry.ago
+        @stats = config.metrics.each_with_object({}) do |metric, stats|
           stats[metric.id] = metric.data
-          stats
         end
         @last_updated = Time.now
       end
       @stats
+    end
+
+    def last_updated
+      @last_updated
     end
   end
 end

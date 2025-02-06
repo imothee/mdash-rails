@@ -78,12 +78,12 @@ class MdashMetricTest < ActiveSupport::TestCase
   end
 
   test "should handle sum aggregation" do
-    metric = Mdash::Metric.new(id: "example_total", model: "Example", aggregation: :sum, aggregation_column: :value, period: :day)
+    metric = Mdash::Metric.new(id: "example_total", model: "Example", aggregation: :sum, aggregation_field: :value, period: :day)
     assert_equal 55, metric.data
   end
 
   test "should handle sum aggregation with a modifier" do
-    metric = Mdash::Metric.new(id: "example_total", model: "Example", aggregation: :sum, aggregation_column: :value, period: :day, modifier: "active")
+    metric = Mdash::Metric.new(id: "example_total", model: "Example", aggregation: :sum, aggregation_field: :value, period: :day, modifier: "active")
     assert_equal 30, metric.data
   end
 end

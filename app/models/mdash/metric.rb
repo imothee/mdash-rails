@@ -7,7 +7,7 @@ module Mdash
     # Valid periods
     PERIODS = %i[hour day week month year].freeze
 
-    attr_reader :id, :model, :aggregation, :aggregation_column, :period, :periods, :modifier
+    attr_reader :id, :model, :aggregation, :aggregation_field, :period, :periods, :modifier
 
     def self.all(configuration: nil)
       configuration ||= Mdash.config
@@ -20,11 +20,11 @@ module Mdash
       end
     end
 
-    def initialize(id:, model:, aggregation:, aggregation_column: :id, period: nil, periods: nil, modifier: nil)
+    def initialize(id:, model:, aggregation:, aggregation_field: :id, period: nil, periods: nil, modifier: nil)
       @id = id.to_sym
       @model = model.to_sym
       @aggregation = aggregation.to_sym
-      @aggregation_column = aggregation_column.to_sym
+      @aggregation_field = aggregation_field.to_sym
       @period = period&.to_sym
       @periods = periods
       @modifier = modifier
@@ -33,6 +33,8 @@ module Mdash
     def valid?
       return false unless AGGREGATIONS.include?(@aggregation)
       return false unless PERIODS.include?(@period) if @period.present?
+
+      return false if @periods.present? && !@periods.positive?
 
       true
     end
@@ -82,9 +84,9 @@ module Mdash
     def aggregation_query(query)
       case @aggregation
       when :sum
-        query.sum(@aggregation_column)
+        query.sum(@aggregation_field)
       when :avg
-        query.average(@aggregation_column)
+        query.average(@aggregation_field)
       when :count
         query.count
       end
